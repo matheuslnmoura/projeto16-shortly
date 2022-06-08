@@ -18,7 +18,7 @@ export default async function validateSignUpData(req, res, next) {
 
 	if (error) {
 		console.log(chalk.bold.red(error));
-		return res.sendStatus(400);
+		return res.sendStatus(422);
 	}
 
 	const databaseEmail = await checkDatabaseForEmail(signUpData);

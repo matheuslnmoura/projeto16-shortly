@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 
 import signUpRouter from './routers/signUpRouter.js';
+import loginRouter from './routers/loginRouter.js';
 
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(json());
 dotenv.config();
 
 app.use(signUpRouter);
+app.use(loginRouter);
 
 
 // eslint-disable-next-line no-undef
