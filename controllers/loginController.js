@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import { query } from 'express';
 import { v4 as uuid } from 'uuid';
 
 import connection from '../db.js';

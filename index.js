@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import signUpRouter from './routers/signUpRouter.js';
 import loginRouter from './routers/loginRouter.js';
+import shortenUrlRouter from './routers/shortenUrlRouter.js';
 
 
 const app = express();
@@ -14,6 +15,7 @@ dotenv.config();
 
 app.use(signUpRouter);
 app.use(loginRouter);
+app.use(shortenUrlRouter);
 
 
 // eslint-disable-next-line no-undef
