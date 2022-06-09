@@ -40,9 +40,9 @@ export async function openUrl(req, res) {
 		}
 
 		const {url: redirectUrl, visitCount} = dataBaseUrl; 
-		updateVisitCount(shortUrl, visitCount);
+		await updateVisitCount(shortUrl, visitCount);
 
-		return res.redirect(200, redirectUrl);
+		return res.redirect(redirectUrl);
 
 	} catch (error) {
 		console.log(chalk.bold.red(error));
@@ -56,5 +56,15 @@ async function updateVisitCount(shortUrl, visitCount) {
 	    UPDATE urls SET "visitCount" = ($1)
         WHERE "shortUrl" = ($2)
 	`, [visitCount, shortUrl]);
-
+	
+	return 'ae palhaço';
 }
+
+// export async function deleteUrl(req, res) {
+// 	try {
+        
+// 	} catch (error) {
+// 		console.log(chalk.bold.red(error));
+// 		return res.sendStatus(500);
+// 	}
+// }
