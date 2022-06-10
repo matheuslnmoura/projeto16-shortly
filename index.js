@@ -7,6 +7,7 @@ import signUpRouter from './routers/signUpRouter.js';
 import loginRouter from './routers/loginRouter.js';
 import shortenUrlRouter from './routers/shortenUrlRouter.js';
 import urlRouter from './routers/urlRouter.js';
+import usersRouter from './routers/userRouter.js';
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(signUpRouter);
 app.use(loginRouter);
 app.use(shortenUrlRouter);
 app.use(urlRouter);
+app.use(usersRouter);
 
 
 // eslint-disable-next-line no-undef
