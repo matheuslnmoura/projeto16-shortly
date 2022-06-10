@@ -56,15 +56,52 @@ async function updateVisitCount(shortUrl, visitCount) {
 	    UPDATE urls SET "visitCount" = ($1)
         WHERE "shortUrl" = ($2)
 	`, [visitCount, shortUrl]);
-	
-	return 'ae palhaço';
 }
 
-// export async function deleteUrl(req, res) {
-// 	try {
+export async function deleteUrl(req, res) {
+	try {
+		const urlIdObj = req.params;
+		const {id} = urlIdObj;
+		const {userId} = res.locals.user;
+
+		const dataBaseUrl = (await connection.query(`
+            SELECT urls.id, urls."shortUrl", urls.url, urls."userId", urls."visitCount"
+            FROM urls
+            WHERE urls.id = ($1)
+        `, [id])).rows[0];
+
+		if(userId !== dataBaseUrl.userId) {
+			return res.status(401).send('You can\'t delete URLs that are not yours!');
+		}
+
+		if(!dataBaseUrl) {
+			return res.status(404).send('Url not found :(');
+		}
+
+		await sendToDeletedUrlsTable(dataBaseUrl, res);
+
+		await connection.query(`
+            DELETE FROM urls
+            WHERE urls.id = $1
+        `, [id]);
         
-// 	} catch (error) {
-// 		console.log(chalk.bold.red(error));
-// 		return res.sendStatus(500);
-// 	}
-// }
+		return res.sendStatus(204);
+	} catch (error) {
+		console.log(chalk.bold.red(error));
+		return res.sendStatus(500);
+	}
+}
+
+async function sendToDeletedUrlsTable(dataBaseUrl, res) {
+	const {shortUrl, url, userId, visitCount} = dataBaseUrl;
+	try {
+		await connection.query(`
+        INSERT INTO "deletedUrls" ("shortUrl", url, "userId", "visitCount")
+        VALUES($1, $2, $3, $4)
+        `, [shortUrl, url, userId, visitCount]);
+		return;
+	} catch (error) {
+		console.log(chalk.bold.red(error));
+		return res.sendStatus(500);
+	}
+}
