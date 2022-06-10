@@ -26,13 +26,13 @@ CREATE TABLE "urls"(
     "visitCount" INTEGER NOT NULL DEFAULT 0
 )
 
-SELECT * FROM users
+--DELETED URLs TABLE
+CREATE TABLE "urls"(
+    "id" SERIAL PRIMARY KEY,
+    "shortUrl" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL REFERENCES "users"("id"),
+    "deletedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    "visitCount" INTEGER NOT NULL DEFAULT 0
+)
 
-
-SELECT * FROM sessions
-
-INSERT INTO users (name, email, password)
-VALUES('João', 'joao@driven.com.br', 'driven')
-
-UPDATE sessions SET "isValid" = false
-WHERE "userId" = 3 AND "isValid" = true
