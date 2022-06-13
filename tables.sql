@@ -32,7 +32,7 @@ CREATE TABLE "deletedUrls"(
     "shortUrl" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "userId" INTEGER NOT NULL REFERENCES "users"("id"),
-    "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    "deletedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     "visitCount" INTEGER NOT NULL DEFAULT 0
 )
 
